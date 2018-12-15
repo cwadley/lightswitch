@@ -1,6 +1,7 @@
 """ routes.py - Defines the routes to endpoints """
 
 from gpiozero import LED
+from flask import request, render_template
 from app import APP, PIN
 
 @APP.route('/')
