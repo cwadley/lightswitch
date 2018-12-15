@@ -23,4 +23,4 @@ def light_off():
 
 @APP.route('/api/lightstatus', methods=['GET'])
 def light_status():
-    return PIN.value, '200'
+    return str(PIN.value), '200'
