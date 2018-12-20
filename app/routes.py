@@ -1,5 +1,6 @@
 """ routes.py - Defines the routes to endpoints """
 
+import json
 from gpiozero import LED
 from flask import request, render_template
 from app import APP, PINS
@@ -17,7 +18,7 @@ def socket_on():
 
     try:
         PINS[socket].on()
-        return get_statuses(), '200'
+        return json.dumps(get_statuses()), '200'
     except:
         return 'Bad Request', '400' 
 
@@ -29,7 +30,7 @@ def socket_off():
 
     try:
         PINS[socket].off()
-        return get_statuses(), '200'
+        return json.dumps(get_statuses()), '200'
     except:
         return 'Bad Request', '400'
 
@@ -37,7 +38,7 @@ def socket_off():
 @APP.route('/api/socketstatus', methods=['GET'])
 def socket_status():
     """ Returns the status of the passed socket """
-    return get_statuses(), '200'
+    return json.dumps(get_statuses()), '200'
 
 
 def get_statuses():

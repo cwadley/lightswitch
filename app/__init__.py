@@ -22,4 +22,7 @@ PINS = {}
 PINS['1'] = LED(3)
 PINS['2'] = LED(4)
 
+PINS['1'].off()
+PINS['2'].off()
+
 from app import routes
