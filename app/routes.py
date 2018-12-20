@@ -2,25 +2,48 @@
 
 from gpiozero import LED
 from flask import request, render_template
-from app import APP, PIN
+from app import APP, PINS
 
 @APP.route('/')
 def index():
     """ Renders the default index template """
     return render_template("index.html")
 
-@APP.route('/api/lighton', methods=['GET'])
-def light_on():
-    """ Turns on the light """
-    PIN.on()
-    return 'OK', '200'
 
-@APP.route('/api/lightoff', methods=['GET'])
-def light_off():
-    """ Turns off the light """
-    PIN.off()
-    return 'OK', '200'
+@APP.route('/api/socketon', methods=['GET'])
+def socket_on():
+    """ Turns on passed socket """
+    socket = request.args.get('socket_num')
 
-@APP.route('/api/lightstatus', methods=['GET'])
-def light_status():
-    return str(PIN.value), '200'
+    try:
+        PINS[socket].on()
+        return get_statuses(), '200'
+    except:
+        return 'Bad Request', '400' 
+
+
+@APP.route('/api/socketoff', methods=['GET'])
+def socket_off():
+    """ Turns off passed socket """
+    socket = request.args.get('socket_num')
+
+    try:
+        PINS[socket].off()
+        return get_statuses(), '200'
+    except:
+        return 'Bad Request', '400'
+
+
+@APP.route('/api/socketstatus', methods=['GET'])
+def socket_status():
+    """ Returns the status of the passed socket """
+    return get_statuses(), '200'
+
+
+def get_statuses():
+    """ Private function for getting socket statuses """
+    pinValues = {}
+    for key, val in PINS.items():
+        pinValues[key] = bool(val.value)
+
+    return pinValues

@@ -18,6 +18,8 @@ APP = CustomFlask(__name__,
           static_folder="./static",
           template_folder="./template")
 
-PIN = LED(4)
+PINS = {}
+PINS['1'] = LED(3)
+PINS['2'] = LED(4)
 
 from app import routes

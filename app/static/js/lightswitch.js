@@ -1,30 +1,30 @@
-function turnLightOn() {
+function turnLightOn(socket_num) {
 
-	$.get("api/lighton")
+	$.get("api/lighton", { "socket_num": socket_num })
 		.done(function(data) {
-			updateUI(true);
+			updateUI(JSON.parse(data));
 		})
 		.fail(function(data) {
 			$("#errorText").show();
 		});
 }
 
-function turnLightOff() {
+function turnLightOff(socket_num) {
 
-	$.get("api/lightoff")
+	$.get("api/socketoff", { "socket_num": socket_num })
 		.done(function(data) {
-			updateUI(false);
+			updateUI(JSON.parse(data));
 		})
 		.fail(function(data) {
 			$("#errorText").show();
 		});
 }
 
-function getLightStatus() {
+function getSocketStatus() {
 
-	$.get("api/lightstatus")
+	$.get("api/socketstatus")
 		.done(function(data) {
-			updateUI(data === "1");
+			updateUI(JSON.parse(data));
 		})
 		.fail(function(data) {
 			$("#errorText").show();
@@ -34,22 +34,35 @@ function getLightStatus() {
 function init() {
 
 	$("#errorText").hide();
-	updateUI(getLightStatus());
+	updateUI(getSocketStatus());
 }
 
-function updateUI(state) {
+function updateUI(socket_states) {
 	$("#errorText").hide();
-	if (state) {
-		$("#TurnOnButton").hide();
-		$("#TurnOffButton").show();
-		$("#lightStatus").html("ON");
-		$("#lightStatus").css("color", "green");
+	if (socket_states["1"]) {
+		$("#TurnOnButton1").hide();
+		$("#TurnOffButton1").show();
+		$("#socket1Status").html("ON");
+		$("#socket1Status").css("color", "green");
 	}
-	else {
-		$("#TurnOnButton").show();
-		$("#TurnOffButton").hide();
-		$("#lightStatus").html("OFF");
-		$("#lightStatus").css("color", "red");
+	else if (!socket_states["1"]) {
+		$("#TurnOnButton1").show();
+		$("#TurnOffButton1").hide();
+		$("#socket1Status").html("OFF");
+		$("#socket1Status").css("color", "red");
+	}
+
+	if (socket_states["2"]) {
+		$("#TurnOnButton2").hide();
+		$("#TurnOffButton2").show();
+		$("#socket2Status").html("ON");
+		$("#socket2Status").css("color", "green");
+	}
+	else if (!socket_states["2"]){
+		$("#TurnOnButton2").show();
+		$("#TurnOffButton2").hide();
+		$("#socket2Status").html("OFF");
+		$("#socket2Status").css("color", "red");
 	}
 }
 
