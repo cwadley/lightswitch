@@ -20,7 +20,7 @@ function turnLightOff(socket_num) {
 		});
 }
 
-function getSocketStatus() {
+function updateSocketStatus() {
 
 	$.get("api/socketstatus")
 		.done(function(data) {
@@ -34,7 +34,7 @@ function getSocketStatus() {
 function init() {
 
 	$("#errorText").hide();
-	updateUI(getSocketStatus());
+	updateSocketStatus();
 }
 
 function updateUI(socket_states) {
