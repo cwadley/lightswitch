@@ -1,6 +1,6 @@
 function turnLightOn(socket_num) {
 
-	$.get("api/lighton", { "socket_num": socket_num })
+	$.get("api/socketon", { "socket_num": socket_num })
 		.done(function(data) {
 			updateUI(JSON.parse(data));
 		})
