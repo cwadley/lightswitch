@@ -33,13 +33,3 @@ PIN_TIMERS['1'] = { 'start': -1, 'end': -1}
 PIN_TIMERS['2'] = { 'start': -1, 'end': -1}
 
 from app import routes
-
-@APP.before_first_request
-def activateTimer():
-  def checkTimes():
-    while True:
-      print(datetime.datetime.now().time())
-      time.sleep(5)
-
-  thread = threading.Thread(target=checkTimes)
-  thread.start()
