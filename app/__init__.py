@@ -39,8 +39,9 @@ def start_loop(loop):
   loop.run_forever()
 
 def checkTimes(pin_timers):
-  print(datetime.datetime.now().time())
-  asyncio.sleep(5)
+  while True:
+    print(datetime.datetime.now().time())
+    asyncio.sleep(5)
 
 new_loop = asyncio.new_event_loop()
 new_loop.call_soon(checkTimes, PIN_TIMERS)
