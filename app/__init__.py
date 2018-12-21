@@ -41,7 +41,7 @@ def start_loop(loop):
 def checkTimes(pin_timers):
   while True:
     print(datetime.datetime.now().time())
-    asyncio.sleep(5)
+    time.sleep(5)
 
 new_loop = asyncio.new_event_loop()
 new_loop.call_soon(checkTimes, PIN_TIMERS)
