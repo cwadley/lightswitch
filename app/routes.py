@@ -42,12 +42,15 @@ def set_timer():
     startTime = request.args.get('start_time')
     endTime = request.args.get('end_time')
 
-    try:
-        PIN_TIMERS[socket]['start'] = startTime
-        PIN_TIMERS[socket]['end'] = endTime
-        return 'OK', '200'
-    except:
-        return 'Bad Request', '400'
+    print('startTime: ' + startTime)
+    print('endTime: ' + endTime)
+    return 'OK', '200'
+    # try:
+    #     PIN_TIMERS[socket]['start'] = startTime
+    #     PIN_TIMERS[socket]['end'] = endTime
+    #     return 'OK', '200'
+    # except:
+    #     return 'Bad Request', '400'
 
 
 @APP.route('/api/cleartimer', methods=['GET'])
