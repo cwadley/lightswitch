@@ -30,7 +30,7 @@ function updateSocketStatus() {
 
 function setTimer(socket_num) {
 	let startTime = $(`#socket${socket_num}StartTime`).val();
-	let endTime = `#socket${socket_num}EndTime`.val();
+	let endTime = $(`#socket${socket_num}EndTime`).val();
 
 	$.get("api/settimer", { "socket_num": socket_num, "start_time": startTime, "end_time": endTime })
 		.done(function(data) {
