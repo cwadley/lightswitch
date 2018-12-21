@@ -51,7 +51,7 @@ def killLoop():
 new_loop = asyncio.new_event_loop()
 new_loop.call_soon(checkTimes, PIN_TIMERS)
 for signame in {'SIGINT', 'SIGTERM'}:
-  loop.add_signal_handler(getattr(signal, signame), killLoop)
+  new_loop.add_signal_handler(getattr(signal, signame), killLoop)
 
 t = Thread(target=start_loop, args=(new_loop,))
 t.start()
