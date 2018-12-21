@@ -3,6 +3,7 @@ import os
 import asyncio
 import datetime
 import time
+import signal
 from threading import Thread
 from flask import Flask
 from gpiozero import LED
