@@ -3,7 +3,7 @@
 import json
 from gpiozero import LED
 from flask import request, render_template
-from app import APP, PINS
+from app import APP, PINS, PIN_TIMERS
 
 @APP.route('/')
 def index():
@@ -31,6 +31,34 @@ def socket_off():
     try:
         PINS[socket].off()
         return json.dumps(get_statuses()), '200'
+    except:
+        return 'Bad Request', '400'
+
+
+@APP.route('/api/settimer', methods=['GET'])
+def set_timer():
+    """ Sets the timer for the passed socket """
+    socket = request.args.get('socket_num')
+    startTime = request.args.get('start_time')
+    endTime = request.args.get('end_time')
+
+    try:
+        PIN_TIMERS[socket]['start'] = startTime
+        PIN_TIMERS[socket]['end'] = endTime
+        return 'OK', '200'
+    except:
+        return 'Bad Request', '400'
+
+
+@APP.route('/api/cleartimer', methods=['GET'])
+def clear_timer():
+    """ Clears the timer of the passed socket """
+    socket = request.args.get('socket_num')
+
+    try:
+        PIN_TIMERS[socket]['start'] = -1
+        PIN_TIMERS[socket]['end'] = -1
+        return 'OK', '200'
     except:
         return 'Bad Request', '400'
 

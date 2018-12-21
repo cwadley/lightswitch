@@ -1,5 +1,4 @@
-function turnLightOn(socket_num) {
-
+function turnSocketOn(socket_num) {
 	$.get("api/socketon", { "socket_num": socket_num })
 		.done(function(data) {
 			updateUI(JSON.parse(data));
@@ -9,8 +8,7 @@ function turnLightOn(socket_num) {
 		});
 }
 
-function turnLightOff(socket_num) {
-
+function turnSocketOff(socket_num) {
 	$.get("api/socketoff", { "socket_num": socket_num })
 		.done(function(data) {
 			updateUI(JSON.parse(data));
@@ -21,7 +19,6 @@ function turnLightOff(socket_num) {
 }
 
 function updateSocketStatus() {
-
 	$.get("api/socketstatus")
 		.done(function(data) {
 			updateUI(JSON.parse(data));
@@ -31,10 +28,63 @@ function updateSocketStatus() {
 		});
 }
 
-function init() {
+function setTimer(socket_num) {
+	let startTime = $(`#socket${socket_num}StartTime`).val();
+	let endTime = `#socket${socket_num}EndTime`.val();
 
+	$.get("api/settimer", { "socket_num": socket_num, "start_time": startTime, "end_time": endTime })
+		.done(function(data) {
+			$(`#timer${socket_num}ClearText`).hide();
+			$(`#timer${socket_num}ErrorText`).hide();
+			$(`#timer${socket_num}SuccessText`).show();
+		})
+		.fail(function(data) {
+			$(`#timer${socket_num}ClearText`).hide();
+			$(`#timer${socket_num}SuccessText`).hide();
+			$(`#timer${socket_num}ErrorText`).show();
+		});
+}
+
+function clearTimer(socket_num) {
+	$(`#socket${socket_num}StartTime`).val('');
+	$(`#socket${socket_num}EndTime`).val('');
+
+	$.get("api/cleartimer", { "socket_num": socket_num })
+		.done(function(data) {
+			$(`#timer${socket_num}ErrorText`).hide();
+			$(`#timer${socket_num}SuccessText`).hide();
+			$(`#timer${socket_num}ClearText`).show();
+		})
+		.fail(function(data) {
+			$(`#timer${socket_num}ClearText`).hide();
+			$(`#timer${socket_num}SuccessText`).hide();
+			$(`#timer${socket_num}ErrorText`).show();
+		});
+}
+
+function init() {
 	$("#errorText").hide();
-	updateSocketStatus();
+	$("#timer1SuccessText").hide();
+	$("#timer1ErrorText").hide();
+	$("#timer1ClearText").hide();
+	$("#timer2SuccessText").hide();
+	$("#timer2ErrorText").hide();
+	$("#timer2ClearText").hide();
+
+	$('#socket1StartPicker').datetimepicker({
+        format: 'LT'
+    });
+    $('#socket1EndPicker').datetimepicker({
+        format: 'LT'
+    });
+    $('#socket2StartPicker').datetimepicker({
+        format: 'LT'
+    });
+    $('#socket2EndPicker').datetimepicker({
+        format: 'LT'
+    });
+
+    updateSocketStatus();
 }
 
 function updateUI(socket_states) {

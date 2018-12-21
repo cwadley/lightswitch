@@ -14,14 +14,14 @@
 	<div class="row">
 		<div class="col-md-2 col-sm-0 col-xs-0"></div>
 		<div class="col-md-4 col-sm-6 col-xs-6 text-center">
-			<button type="button" class="btn btn-success btn-lg" id="TurnOnButton1" onclick="turnLightOn(1)">Turn Socket 1 On</button>
-			<button type="button" class="btn btn-danger btn-lg" id="TurnOffButton1" onclick="turnLightOff(1)">Turn Socket 1 Off</button>
+			<button type="button" class="btn btn-success btn-lg" id="TurnOnButton1" onclick="turnSocketOn(1)">Turn Socket 1 On</button>
+			<button type="button" class="btn btn-danger btn-lg" id="TurnOffButton1" onclick="turnSocketOff(1)">Turn Socket 1 Off</button>
 			<h2>Socket 1 is currently <span id="socket1Status"></span></h2>
 		</div>
 
 		<div class="col-md-4 col-sm-6 col-xs-6 text-center">
-			<button type="button" class="btn btn-success btn-lg" id="TurnOnButton2" onclick="turnLightOn(2)">Turn Socket 2 On</button>
-			<button type="button" class="btn btn-danger btn-lg" id="TurnOffButton2" onclick="turnLightOff(2)">Turn Socket 2 Off</button>
+			<button type="button" class="btn btn-success btn-lg" id="TurnOnButton2" onclick="turnSocketOn(2)">Turn Socket 2 On</button>
+			<button type="button" class="btn btn-danger btn-lg" id="TurnOffButton2" onclick="turnSocketOff(2)">Turn Socket 2 Off</button>
 			<h2>Socket 2 is currently <span id="socket2Status"></span></h2>
 		</div>
 		<div class="col-md-2 col-sm-0 col-xs-0"></div>
@@ -30,6 +30,58 @@
 		<div class="col-md-12 col-sm-12 col-xs-12 text-center">
 			<h3 id="errorText">Error contacting lightswitch</h3>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2 col-sm-0 col-xs-0"></div>
+		<div class="col-md-4 col-sm-6 col-xs-6">
+			<h3>Socket 1 Timer Settings</h3>
+			<div class="form-group">
+                <div class='input-group date' id='socket1StartPicker'>
+                	<label for="socket1StartTime">Start Time</label>
+                    <input id="socket1StartTime" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+                <div class='input-group date' id='socket1EndPicker'>
+                	<label for="socket1EndTime">End Time</label>
+                    <input id="socket1EndTime" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+				<button type="button" class="btn btn-lg" id="setTimerButton1" onclick="setTimer(1)">Set Socket 1 Timer</button>
+				<button type="button" class="btn btn-lg" id="clearTimerButton1" onclick="clearTimer(1)">Clear Socket 1 Timer</button>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6 col-xs-6">
+			<h3>Socket 2 Timer Settings</h3>
+			<div class="form-group">
+                <div class='input-group date' id='socket2StartPicker'>
+                	<label for="socket2StartTime">Start Time</label>
+                    <input id="socket2StartTime" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+                <div class='input-group date' id='socket2EndPicker'>
+                	<label for="socket2EndTime">End Time</label>
+                    <input id="socket2EndTime" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+				<button type="button" class="btn btn-lg" id="setTimerButton2" onclick="setTimer(2)">Set Socket 2 Timer</button>
+				<button type="button" class="btn btn-lg" id="clearTimerButton2" onclick="clearTimer(2)">Clear Socket 2 Timer</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<h3 id="timer2SuccessText">Successfully set timer for socket 2</h3>
+
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-0 col-xs-0"></div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

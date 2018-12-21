@@ -1,5 +1,8 @@
 """ __init__.py """
 import os
+import asyncio
+import datetime
+from threading import Thread
 from flask import Flask
 from gpiozero import LED
 
@@ -25,4 +28,21 @@ PINS['2'] = LED(4)
 PINS['1'].off()
 PINS['2'].off()
 
+PIN_TIMERS = {}
+PIN_TIMERS['1'] = { 'start': -1, 'end': -1}
+PIN_TIMERS['2'] = { 'start': -1, 'end': -1}
+
 from app import routes
+
+def start_loop(loop):
+    asyncio.set_event_loop(loop)
+    loop.run_forever()
+
+new_loop = asyncio.new_event_loop()
+new_loop.call_soon(checkTimes, PIN_TIMERS)
+t = Thread(target=start_loop, args=(new_loop,))
+t.start()
+
+def checkTimes(pin_timers):
+  print(datetime.datetime.now().time())
+  asyncio.sleep(5)
