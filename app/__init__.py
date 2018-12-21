@@ -35,14 +35,15 @@ PIN_TIMERS['2'] = { 'start': -1, 'end': -1}
 from app import routes
 
 def start_loop(loop):
-    asyncio.set_event_loop(loop)
-    loop.run_forever()
+  asyncio.set_event_loop(loop)
+  loop.run_forever()
+
+def checkTimes(pin_timers):
+  print(datetime.datetime.now().time())
+  asyncio.sleep(5)
 
 new_loop = asyncio.new_event_loop()
 new_loop.call_soon(checkTimes, PIN_TIMERS)
 t = Thread(target=start_loop, args=(new_loop,))
 t.start()
 
-def checkTimes(pin_timers):
-  print(datetime.datetime.now().time())
-  asyncio.sleep(5)
